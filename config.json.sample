@@ -1,0 +1,10 @@
+{
+	"library" :
+	{
+		"dbfile" : "database.db",
+		"folders" : [
+		"/music/",
+		"/more/music/"
+		]
+	}
+}
