@@ -3,14 +3,17 @@ import sys
 from pygame.locals import *
 
 if not pygame.font: print 'Warning, fonts disabled'
-if not pygame.mixer: print 'Warning, sound disabled'
+#if not pygame.mixer: print 'Warning, sound disabled'
+#if not pygame.mixer.music: print 'Warning, music playback disabled'
 
 class GUI:
 	window = None
 	screen = None
+	fpsClock = None
 
 	def __init__(self):
 		pygame.init()
+		self.fpsClock = pygame.time.Clock()
 		self.window = pygame.display.set_mode((640, 480))
 		pygame.display.set_caption('Sherilyn')
 		self.screen = pygame.display.get_surface()
@@ -31,5 +34,23 @@ class GUI:
 				#print event
 				1
 
+	def set_status(self, status):
+		font = pygame.font.Font(None, 12)
+		text = font.render(status, 1, (255, 255, 10))
+		textpos = text.get_rect()
+		textpos.centerx = self.screen.get_rect().centerx
+		textpos.centery = 400
+		self.screen.blit(text, textpos)
+		pygame.display.flip()
+
 	def update(self):
 		self.input(pygame.event.get())
+		pygame.display.update()
+		self.fpsClock.tick(30)
+		self.window.fill(pygame.Color(0, 0, 0))
+
+
+
+#	def queueTrack(self, filename):
+#		pygame.mixer.music.load(filename)
+#		pygame.mixer.music.play()

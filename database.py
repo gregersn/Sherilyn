@@ -18,11 +18,14 @@ class Database:
 		if self.conn is not None:
 			self.conn.close()
 
+	def commit(self):
+		self.conn.commit()
+
 	def createDatabase(self, file):
 		self.conn = sqlite3.connect(file)
 		c = self.conn.cursor()
-		c.execute('''CREATE TABLE folders (path text, scanned integer)''')
-		c.execute('''CREATE TABLE files (filename text)''')
+		c.execute('''CREATE TABLE IF NOT EXISTS folders (path text UNIQUE, scanned integer)''')
+		c.execute('''CREATE TABLE IF NOT EXISTS files (filename text UNIQUE)''')
 		self.conn.commit()
 
 	# Functions for library handling
@@ -38,6 +41,18 @@ class Database:
 		c.execute('INSERT INTO folders VALUES (?, ?)', (path, scanned))
 		self.conn.commit()
 		return c.lastrowid
+
+	# File functions
+	def addFiles(self, files, folder):
+		c = self.conn.cursor()
+		for file in files: 
+			c.execute('INSERT INTO files VALUES (?)', (file,))
+		self.conn.commit()
+
+	def getRandomFile(self):
+		c = self.conn.cursor()
+		c.execute('SELECT filename FROM files ORDER BY RANDOM() LIMIT 1')
+		return c.fetchone()[0]
 
 
 def main():

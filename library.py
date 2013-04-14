@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import fnmatch
 
@@ -31,7 +33,18 @@ class Library:
 			for filename in fnmatch.filter(filenames, '*.mp3'):
 				matches.append(os.path.join(root, filename))
 
-		print matches
+		self.addFiles(matches, folder)
+
+	def rescan(self):
+		for folder in self.folders:
+			self.scanFolder(folder)
+
+	def addFiles(self, files, folder):
+		self.db.addFiles(files, folder)
+
+	def getRandomFile(self):
+		return self.db.getRandomFile()
+				
 
 
 
