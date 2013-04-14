@@ -12,10 +12,19 @@ class GUI:
 	fpsClock = None
 
 	def __init__(self):
+		#Init pygame
 		pygame.init()
+
+		# Get an fps clock to limit framerate
 		self.fpsClock = pygame.time.Clock()
+
+		# Set up window
 		self.window = pygame.display.set_mode((640, 480))
+
+		# Set window caption
 		pygame.display.set_caption('Sherilyn')
+
+
 		self.screen = pygame.display.get_surface()
 
 		if pygame.font:
@@ -29,7 +38,11 @@ class GUI:
 	def input(self, events):
 		for event in events:
 			if event.type == QUIT:
+				pygame.quit()	
 				sys.exit(0)
+			elif event.type == KEYDOWN:
+				if event.key == K_ESCAPE:
+					pygame.event.post(pygame.event.Event(QUIT))
 			else:
 				#print event
 				1

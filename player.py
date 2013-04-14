@@ -87,14 +87,14 @@ class Player:
 			pos = self.player.query_position(gst.FORMAT_TIME, None)[0]
 			return pos/1000000000
 		except:
-			return "00"
+			return 0
 
 	def get_duration(self):
 		try:
 			dur = self.player.query_duration(gst.FORMAT_TIME, None)[0]
 			return dur/1000000000
 		except:
-			return "00"
+			return 0
 
 
 

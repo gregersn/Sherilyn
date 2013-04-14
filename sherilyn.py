@@ -47,7 +47,9 @@ def main():
 
 	#gui.queueTrack(track_playing)
 	while True:
-		gui.set_status(track_playing + " " + str(player.get_position()) + " / " + str(player.get_duration()))
+		pos = player.get_position()
+		dur = player.get_duration()
+		gui.set_status("%s %02d:%02d / %02d:%02d " % (track_playing, pos/60, (pos%60), dur/60, (dur%60)))
 		gui.update()
 		if player.queue is None:
 			track_playing = track_next
